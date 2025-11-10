@@ -1,46 +1,88 @@
-// app/page.tsx
 import Link from 'next/link';
 import BreakingNewsCard from './components/BreakingNewsCard';
 import NewsList from './components/NewsList';
+
 import {
   getBreakingNews,
-  getLatestNews,
   getTrendingTopics,
   getFeaturedArticle,
-} from '../lib/fetchNews'; // Import fetching functions
+  fetchNewsFromRssFeed,
+} from '../lib/fetchNews';
 
-export default async function Home() { // Make the component async
-  // Fetch all data concurrently
-  const [breakingNews, mockNewsData, trendingTopics, featuredArticle] = await Promise.all([
-    getBreakingNews(),
-    getLatestNews(),
-    getTrendingTopics(),
-    getFeaturedArticle(),
-  ]);
+import type { UiNewsItem, BreakingNews, TrendingTopic, FeaturedArticle } from '../lib/types/ui';
+
+export default async function Home() {
+  const numberOfMainNewsCardsPerFeed = 3;
+  const numberOfRelatedArticlesPerCard = 5;
+
+  const rssFeedUrls = [
+    { name: 'BBC News – Top Stories', url: 'https://feeds.bbci.co.uk/news/rss.xml' },
+    { name: 'The Guardian – World', url: 'https://www.theguardian.com/world/rss' },
+    { name: 'Al Jazeera', url: 'https://www.aljazeera.com/xml/rss/all.xml' },
+    { name: 'NPR News', url: 'https://feeds.npr.org/1001/rss.xml' },
+    { name: 'DW News', url: 'https://rss.dw.com/rdf/rss-en-all' },
+    { name: 'NY Times – Home Page', url: 'https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml' },
+  ];
+
+  const breakingNews =
+    await getBreakingNews().catch(() => ({
+      tag: 'BREAKING',
+      headline: 'Stay tuned for live updates.',
+      callToActionText: 'View live coverage',
+      callToActionHref: '/latest',
+      className: 'bg-red-700 text-white',
+      source: 'KindJoe Aggregator',
+      timeAgo: 'Just now',
+    }));
+
+  const trendingTopics =
+    await getTrendingTopics().catch(() => []);
+
+  const featuredArticle =
+    await getFeaturedArticle().catch(() => ({
+      imageUrl: 'https://placehold.co/960x540/jpg',
+      imageAlt: 'Featured story',
+      href: '/featured',
+      headline: 'Featured story unavailable',
+      description: 'Please check back later.',
+    }));
+
+  const rssPromises = rssFeedUrls.map(feed =>
+    fetchNewsFromRssFeed(
+      feed.url,
+      numberOfMainNewsCardsPerFeed,
+      numberOfRelatedArticlesPerCard,
+      feed.name
+    ).catch(() => [] as UiNewsItem[])
+  );
+
+  const rssNewsArrays = await Promise.all(rssPromises);
+  const latestNewsFromRss: UiNewsItem[] = rssNewsArrays.flat();
 
   return (
     <main className="flex flex-col text-gray-900">
-      {/* Breaking News – full width */}
-      {/* Only render if breakingNews data exists */}
-      {breakingNews && <BreakingNewsCard {...breakingNews} className="w-full" />}
+      {breakingNews && (
+        <BreakingNewsCard
+          className="w-full"
+          tag={breakingNews.tag ?? 'BREAKING'}
+          headline={breakingNews.headline ?? ''}
+          callToActionText={breakingNews.callToActionText ?? 'Read more'}
+          callToActionHref={breakingNews.callToActionHref ?? '#'}
+          source={breakingNews.source}
+          timeAgo={breakingNews.timeAgo}
+        />
+      )}
 
-      {/* Main container */}
       <div className="w-full max-w-5xl mx-auto px-4 md:px-5 lg:px-6 py-6 md:py-8 flex flex-col gap-8">
-        {/* Latest News */}
-        {/* Only render if there is latest news data */}
-        {mockNewsData.length > 0 && (
+        {latestNewsFromRss.length > 0 && (
           <>
             <h2 className="text-xl md:text-2xl font-semibold text-gray-900 border-b border-red-600 pb-2">
               Latest News
             </h2>
-            {/* Dynamic News List */}
-            <NewsList newsData={mockNewsData} />
+            <NewsList newsData={latestNewsFromRss} />
           </>
         )}
 
-
-        {/* Featured Article */}
-        {/* Only render if featuredArticle data exists */}
         {featuredArticle && (
           <section className="bg-white rounded-md shadow-sm overflow-hidden flex flex-col md:flex-row text-gray-900">
             <div className="md:w-1/2">
@@ -56,9 +98,7 @@ export default async function Home() { // Make the component async
                   {featuredArticle.headline}
                 </Link>
               </h3>
-              <p className="text-sm md:text-base text-gray-800">
-                {featuredArticle.description}
-              </p>
+              <p className="text-sm md:text-base text-gray-800">{featuredArticle.description}</p>
               <Link
                 href={featuredArticle.href}
                 className="self-start text-blue-700 font-medium hover:underline text-sm md:text-base"
@@ -69,8 +109,6 @@ export default async function Home() { // Make the component async
           </section>
         )}
 
-        {/* Trending Topics */}
-        {/* Only render if trendingTopics data exists */}
         {trendingTopics.length > 0 && (
           <section>
             <h2 className="text-xl md:text-2xl font-semibold text-gray-900 border-b border-red-600 pb-2 mb-4">
@@ -90,11 +128,8 @@ export default async function Home() { // Make the component async
           </section>
         )}
 
-        {/* Newsletter CTA */}
         <div className="bg-blue-50 p-6 rounded-md text-center text-blue-900">
-          <p className="text-base md:text-lg font-medium">
-            Get the top stories, once a day.
-          </p>
+          <p className="text-base md:text-lg font-medium">Get the top stories, once a day.</p>
           <button className="mt-3 px-5 py-2.5 bg-blue-700 text-white rounded-md hover:bg-blue-800 text-sm md:text-base">
             Subscribe
           </button>

@@ -1,13 +1,10 @@
-// app/components/Header.tsx
 import React from 'react';
 import Link from 'next/link';
 
 const Header: React.FC = () => {
   return (
     <header className="w-full bg-white/95 backdrop-blur px-4 py-3 md:px-6 md:py-4 shadow-sm sticky top-0 z-40">
-      {/* Top row */}
       <div className="mx-auto max-w-5xl flex items-center justify-between gap-3">
-        {/* Logo */}
         <Link href="/" className="flex items-center" aria-label="Home">
           <img
             src="https://placehold.co/150x44/0A1F44/FFFFFF?text=YOUR+LOGO"
@@ -16,37 +13,16 @@ const Header: React.FC = () => {
           />
         </Link>
 
-        {/* Right-side nav */}
         <nav className="hidden sm:flex items-center gap-4 text-gray-800">
-          <Link href="/games" className="text-sm md:text-[15px] hover:underline">
-            Games
-          </Link>
-          <Link href="/newsletters" className="text-sm md:text-[15px] hover:underline">
-            Newsletters
-          </Link>
-
-          {/* Search (placeholder) */}
-          <button
-            aria-label="Search"
-            className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300"
-          >
-            🔍
-          </button>
-
-          {/* Menu */}
-          <button
-            aria-label="Menu"
-            className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center"
-          >
-            ☰
-          </button>
+          <Link href="/games" className="text-sm md:text-[15px] hover:underline">Games</Link>
+          <Link href="/newsletters" className="text-sm md:text-[15px] hover:underline">Newsletters</Link>
+          <button aria-label="Search" className="w-8 h-8 flex items-center justify-center rounded-full border border-gray-300">🔍</button>
+          <button aria-label="Menu" className="w-9 h-9 rounded-full bg-black text-white flex items-center justify-center">☰</button>
         </nav>
       </div>
 
-      {/* Divider */}
       <div className="mx-auto max-w-5xl mt-3 h-px bg-gray-200" />
 
-      {/* Bottom row */}
       <nav className="mx-auto max-w-5xl mt-3 flex flex-wrap justify-center sm:justify-between items-center gap-2 text-sm md:text-[15px] text-gray-800">
         <div className="flex flex-wrap justify-center items-center gap-3">
           <Link href="/" className="hover:underline">Home</Link>

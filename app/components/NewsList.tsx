@@ -1,25 +1,11 @@
-// app/components/NewsList.tsx
 'use client';
 
 import React from 'react';
 import NewsCard from './NewsCard';
-
-interface Article {
-  text: string;
-  href: string;
-}
-
-interface NewsItem {
-  timeAgo: string;
-  imageUrl: string;
-  imageAlt: string;
-  headline: string;
-  headlineHref: string;
-  relatedArticles: Article[];
-}
+import type { UiNewsItem } from '../../lib/types/ui';
 
 interface NewsListProps {
-  newsData: NewsItem[];
+  newsData: UiNewsItem[];
 }
 
 const NewsList: React.FC<NewsListProps> = ({ newsData }) => {
