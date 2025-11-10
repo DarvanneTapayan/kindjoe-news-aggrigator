@@ -1,0 +1,23 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Subtle default type scale & rhythm */
+:root {
+  --font-size-base: 16px;
+}
+
+html {
+  font-size: var(--font-size-base);
+}
+
+body {
+  line-height: 1.55;
+}
+
+/* Make focus states visible */
+:where(a, button):focus {
+  outline: 2px solid #1d4ed8; /* blue-700 */
+  outline-offset: 2px;
+}
