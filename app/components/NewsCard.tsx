@@ -20,15 +20,13 @@ const NewsCard: React.FC<NewsCardProps> = ({
   relatedArticles = [],
 }) => {
   return (
-    <article className="flex flex-col gap-3 p-4 bg-white rounded-md shadow-sm">
-      {/* Time */}
+    <article className="flex flex-col gap-3 p-4 bg-white rounded-md shadow-sm text-gray-900">
       <div className="bg-red-700 px-2.5 py-0.5 self-start rounded">
         <span className="text-white text-[11px] font-medium tracking-wide">
           {timeAgo}
         </span>
       </div>
 
-      {/* Image */}
       <div className="relative w-full overflow-hidden rounded aspect-video">
         <img
           className="absolute inset-0 w-full h-full object-cover"
@@ -37,22 +35,19 @@ const NewsCard: React.FC<NewsCardProps> = ({
         />
       </div>
 
-      {/* Headline */}
-      <h3 className="text-lg md:text-xl font-semibold leading-snug">
+      <h3 className="text-lg md:text-xl font-semibold leading-snug text-gray-900">
         {headline}
       </h3>
 
-      {/* Divider */}
       <div className="h-px bg-gray-200" />
 
-      {/* Related */}
       {relatedArticles.length > 0 && (
         <ul className="flex flex-col gap-2">
           {relatedArticles.map((article, i) => (
             <li key={i}>
               <a
                 href={article.href}
-                className="text-sm md:text-[15px] font-medium underline hover:text-blue-600"
+                className="text-[15px] text-gray-800 font-medium underline hover:text-blue-600"
               >
                 {article.text}
               </a>

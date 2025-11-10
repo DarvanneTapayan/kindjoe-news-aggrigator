@@ -14,9 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
+      {/* Force strong base text color on body */}
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased">
         <Header />
-        {children}
+        {/* Ensure everything below inherits solid text color */}
+        <div className="text-gray-900">{children}</div>
       </body>
     </html>
   );

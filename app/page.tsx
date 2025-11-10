@@ -4,7 +4,6 @@ import BreakingNewsCard from './components/BreakingNewsCard';
 import Link from 'next/link';
 
 export default function Home() {
-  // --- Data for Components ---
   const breakingNews = {
     tag: 'EXCLUSIVE',
     headline: 'Biden approval dips amid new controversy',
@@ -15,30 +14,19 @@ export default function Home() {
   const mainNewsCardsData = [
     {
       timeAgo: '15m ago',
-      imageUrl:
-        'https://placehold.co/586x390/007bff/ffffff?text=SPACE+NEWS',
-      imageAlt:
-        'Astronauts stranded in space after their capsule is struck by mystery object',
-      headline:
-        'Astronauts stranded after capsule hit by “mystery object”',
+      imageUrl: 'https://placehold.co/586x390/007bff/ffffff?text=SPACE+NEWS',
+      imageAlt: 'Astronauts stranded in space after their capsule is struck by mystery object',
+      headline: 'Astronauts stranded after capsule hit by “mystery object”',
       relatedArticles: [
-        {
-          text: "NASA investigates 'mystery object' in space",
-          href: '/tech/nasa-investigation',
-        },
-        {
-          text: 'Future of space travel in question',
-          href: '/tech/space-travel-future',
-        },
+        { text: "NASA investigates 'mystery object' in space", href: '/tech/nasa-investigation' },
+        { text: 'Future of space travel in question', href: '/tech/space-travel-future' },
       ],
     },
     {
       timeAgo: '30m ago',
-      imageUrl:
-        'https://placehold.co/586x390/28a745/ffffff?text=TECH+BREAKTHROUGH',
+      imageUrl: 'https://placehold.co/586x390/28a745/ffffff?text=TECH+BREAKTHROUGH',
       imageAlt: 'AI chip breakthrough',
-      headline:
-        'Revolutionary AI chip breaks speed records in Silicon Valley',
+      headline: 'Revolutionary AI chip breaks speed records in Silicon Valley',
       relatedArticles: [
         { text: 'Impact on computing industry', href: '/tech/ai-impact' },
         { text: 'Competitors scramble for answers', href: '/business/ai-competitors' },
@@ -46,8 +34,7 @@ export default function Home() {
     },
     {
       timeAgo: '1h ago',
-      imageUrl:
-        'https://placehold.co/586x390/ffc107/333333?text=LOCAL+HERO',
+      imageUrl: 'https://placehold.co/586x390/ffc107/333333?text=LOCAL+HERO',
       imageAlt: 'Local hero saving pets',
       headline: 'Local woman rescues dozens of animals from floods',
       relatedArticles: [
@@ -57,8 +44,7 @@ export default function Home() {
     },
     {
       timeAgo: '2h ago',
-      imageUrl:
-        'https://placehold.co/586x390/17a2b8/ffffff?text=BUSINESS+UPDATE',
+      imageUrl: 'https://placehold.co/586x390/17a2b8/ffffff?text=BUSINESS+UPDATE',
       imageAlt: 'Stock market dip',
       headline: 'Global markets dip amid inflation concerns',
       relatedArticles: [
@@ -77,8 +63,7 @@ export default function Home() {
   ];
 
   const featuredArticle = {
-    imageUrl:
-      'https://placehold.co/1200x600/6f42c1/ffffff?text=FEATURED+ARTICLE',
+    imageUrl: 'https://placehold.co/1200x600/6f42c1/ffffff?text=FEATURED+ARTICLE',
     imageAlt: 'Featured article image',
     headline: 'How remote work is reshaping cities',
     description:
@@ -86,28 +71,22 @@ export default function Home() {
     href: '/lifestyle/remote-work-cities',
   };
 
-  // --- Rendered Content ---
   return (
-    <main className="flex flex-col">
-      {/* Breaking News – full width but compact */}
+    <main className="flex flex-col text-gray-900">
       <BreakingNewsCard {...breakingNews} className="w-full" />
 
-      {/* Main container */}
       <div className="w-full max-w-5xl mx-auto px-4 md:px-5 lg:px-6 py-6 md:py-8 flex flex-col gap-8">
-        {/* Latest News */}
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800 border-b border-red-600 pb-2">
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-900 border-b border-red-600 pb-2">
           Latest News
         </h2>
 
-        {/* Grid */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mainNewsCardsData.map((data, index) => (
-            <NewsCard key={index} {...data} />
+          {mainNewsCardsData.map((data, idx) => (
+            <NewsCard key={idx} {...data} />
           ))}
         </section>
 
-        {/* Featured Article */}
-        <section className="bg-white rounded-md shadow-sm overflow-hidden flex flex-col md:flex-row">
+        <section className="bg-white rounded-md shadow-sm overflow-hidden flex flex-col md:flex-row text-gray-900">
           <div className="md:w-1/2">
             <img
               src={featuredArticle.imageUrl}
@@ -116,15 +95,12 @@ export default function Home() {
             />
           </div>
           <div className="md:w-1/2 p-5 md:p-6 flex flex-col justify-center gap-3">
-            <h3 className="text-xl md:text-2xl font-semibold leading-snug">
-              <Link
-                href={featuredArticle.href}
-                className="hover:text-blue-600 transition-colors"
-              >
+            <h3 className="text-xl md:text-2xl font-semibold leading-snug text-gray-900">
+              <Link href={featuredArticle.href} className="hover:text-blue-600">
                 {featuredArticle.headline}
               </Link>
             </h3>
-            <p className="text-sm md:text-base text-gray-700">
+            <p className="text-sm md:text-base text-gray-800">
               {featuredArticle.description}
             </p>
             <Link
@@ -136,9 +112,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Trending Topics */}
         <section>
-          <h2 className="text-xl md:text-2xl font-semibold text-gray-800 border-b border-red-600 pb-2 mb-4">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-900 border-b border-red-600 pb-2 mb-4">
             Trending Topics
           </h2>
           <div className="flex flex-wrap gap-2.5">
@@ -146,7 +121,7 @@ export default function Home() {
               <Link
                 key={index}
                 href={topic.href}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1.5 rounded-full text-sm md:text-[15px] transition-colors"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-900 px-3 py-1.5 rounded-full text-sm md:text-[15px]"
               >
                 #{topic.name}
               </Link>
@@ -154,12 +129,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Newsletter CTA */}
         <div className="bg-blue-50 p-6 rounded-md text-center text-blue-900">
           <p className="text-base md:text-lg font-medium">
             Get the top stories, once a day.
           </p>
-          <button className="mt-3 px-5 py-2.5 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition-colors text-sm md:text-base">
+          <button className="mt-3 px-5 py-2.5 bg-blue-700 text-white rounded-md hover:bg-blue-800 text-sm md:text-base">
             Subscribe
           </button>
         </div>
