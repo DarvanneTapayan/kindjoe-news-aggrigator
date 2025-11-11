@@ -2,7 +2,7 @@
 
 import React from 'react';
 import NewsCard from './NewsCard';
-import type { UiNewsItem } from '../../lib/types/ui';
+import type { UiNewsItem } from '../lib/types/ui';
 
 interface NewsListProps {
   newsData: UiNewsItem[];

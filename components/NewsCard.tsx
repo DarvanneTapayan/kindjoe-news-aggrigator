@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import type { UiNewsItem } from '../../lib/types/ui';
+import type { UiNewsItem } from '../lib/types/ui';
 
 type NewsCardProps = UiNewsItem;
 

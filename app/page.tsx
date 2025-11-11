@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import BreakingNewsCard from './components/BreakingNewsCard';
-import NewsList from './components/NewsList';
+import BreakingNewsCard from '../components/BreakingNewsCard';
+import NewsList from '../components/NewsList';
 
 import {
   getBreakingNews,
@@ -9,7 +9,7 @@ import {
   fetchNewsFromRssFeed,
 } from '../lib/fetchNews';
 
-import type { UiNewsItem, BreakingNews, TrendingTopic, FeaturedArticle } from '../lib/types/ui';
+import type { UiNewsItem } from '../lib/types/ui';
 
 export default async function Home() {
   const numberOfMainNewsCardsPerFeed = 3;
@@ -61,6 +61,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col text-gray-900">
+      {/* Breaking News */}
       {breakingNews && (
         <BreakingNewsCard
           className="w-full"
@@ -73,7 +74,9 @@ export default async function Home() {
         />
       )}
 
+      {/* Main Content */}
       <div className="w-full max-w-5xl mx-auto px-4 md:px-5 lg:px-6 py-6 md:py-8 flex flex-col gap-8">
+        {/* Latest News */}
         {latestNewsFromRss.length > 0 && (
           <>
             <h2 className="text-xl md:text-2xl font-semibold text-gray-900 border-b border-red-600 pb-2">
@@ -83,6 +86,7 @@ export default async function Home() {
           </>
         )}
 
+        {/* Featured Article */}
         {featuredArticle && (
           <section className="bg-white rounded-md shadow-sm overflow-hidden flex flex-col md:flex-row text-gray-900">
             <div className="md:w-1/2">
@@ -109,6 +113,7 @@ export default async function Home() {
           </section>
         )}
 
+        {/* Trending Topics */}
         {trendingTopics.length > 0 && (
           <section>
             <h2 className="text-xl md:text-2xl font-semibold text-gray-900 border-b border-red-600 pb-2 mb-4">
@@ -128,6 +133,17 @@ export default async function Home() {
           </section>
         )}
 
+        {/* Go to News Page Button */}
+        <div className="mt-10 flex justify-center">
+          <Link
+            href="/news"
+            className="px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition"
+          >
+            Go to News Page →
+          </Link>
+        </div>
+
+        {/* Newsletter Section */}
         <div className="bg-blue-50 p-6 rounded-md text-center text-blue-900">
           <p className="text-base md:text-lg font-medium">Get the top stories, once a day.</p>
           <button className="mt-3 px-5 py-2.5 bg-blue-700 text-white rounded-md hover:bg-blue-800 text-sm md:text-base">
