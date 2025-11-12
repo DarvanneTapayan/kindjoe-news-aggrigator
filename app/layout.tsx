@@ -1,17 +1,27 @@
-import './globals.css';
-import Header from '../components/Header';
+// app/layout.tsx
+import type { Metadata } from "next";
+import "./globals.css";
 
-export const metadata = {
-  title: 'KindJoe News — Aggregator',
-  description: 'A clean, fast news aggregator built with Next.js',
+export const metadata: Metadata = {
+  title: "KindJoe — News Hub",
+  description: "Featured KindJoe stories + curated RSS in one place.",
+  metadataBase: new URL("https://kindjoe.example.com"),
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full">
-      <body className="min-h-screen bg-gray-50 text-gray-900 antialiased">
-        <Header />
-        <div className="text-gray-900">{children}</div>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
+        {children}
       </body>
     </html>
   );
