@@ -8,32 +8,73 @@ import {
 
 import RssHubSection from "@/components/sections/RssHubSection";
 import { RssSidebar } from "@/components/rss/RssSideBar";
+import { FeaturedStoriesCarouselHero } from "@/components/hero/FeaturedStoriesCarouselHero";
 
 import { mockStocks } from "@/lib/rss/mockData";
 import type { RssLink } from "@/lib/rss/types";
 
 // -----------------------------
-// Random long news title generator
+// FEATURED STORIES (HERO CAROUSEL)
 // -----------------------------
-function randomTitle() {
-  const pool = [
-    "President's enforcer inspires fear and vexation across Washington as insiders warn of escalating political turmoil...",
-    "Explosive new documents reveal weeks of secretly negotiated power deals shaking both Congress and Wall Street...",
-    "International watchdog raises alarms after unprecedented cyber infiltration impacts major infrastructure systems...",
-    "Major airlines scramble as regulatory overhaul triggers mass schedule disruption ahead of holiday travel season...",
-    "Technology giants face renewed scrutiny amid revelations of large-scale data harvesting practices and privacy concerns...",
-    "Unexpected economic surge shocks analysts as global markets reposition ahead of critical monetary decisions...",
-    "Witness testimony in landmark corruption case paints chaotic picture of behind-the-scenes Washington maneuvering...",
-    "Astronomers detect mysterious deep-space signal repeating with unusual mathematical precision, sparking debate...",
-    "Key intelligence memo leaked overnight warns of increasing geopolitical instability across multiple regions...",
-    "Historic weather anomalies batter coastal cities, prompting emergency declarations and long-term climate planning...",
-  ];
-
-  return pool[Math.floor(Math.random() * pool.length)];
-}
+const featuredStories = [
+  {
+    id: "f1",
+    title:
+      "Trump threatens to sue 'corrupt' BBC for $1.5b over 'salacious' documentary as media battle intensifies...",
+    imageSrc: "https://placehold.co/900x500",
+    href: "#",
+    author: "KindJoe Staff",
+    readTime: "6 min read",
+  },
+  {
+    id: "f2",
+    title:
+      "Global markets wobble as unexpected inflation report sends shockwaves through Wall Street and beyond...",
+    imageSrc: "https://placehold.co/900x500",
+    href: "#",
+    author: "KindJoe Business Desk",
+    readTime: "4 min read",
+  },
+  {
+    id: "f3",
+    title:
+      "Tech giants face fresh scrutiny amid sweeping data-privacy overhaul and tighter international regulations...",
+    imageSrc: "https://placehold.co/900x500",
+    href: "#",
+    author: "KindJoe Tech Team",
+    readTime: "7 min read",
+  },
+  {
+    id: "f4",
+    title:
+      "Travel chaos deepens as major carriers struggle with staffing, storms, and new global airspace restrictions...",
+    imageSrc: "https://placehold.co/900x500",
+    href: "#",
+    author: "KindJoe Travel",
+    readTime: "5 min read",
+  },
+  {
+    id: "f5",
+    title:
+      "Housing market surprises analysts as buyers return amid high rates and tight inventory across key cities...",
+    imageSrc: "https://placehold.co/900x500",
+    href: "#",
+    author: "KindJoe Money",
+    readTime: "6 min read",
+  },
+  {
+    id: "f6",
+    title:
+      "Washington insiders brace for bruising budget showdown with spending cuts and new taxes on the table...",
+    imageSrc: "https://placehold.co/900x500",
+    href: "#",
+    author: "KindJoe Politics",
+    readTime: "8 min read",
+  },
+];
 
 // -----------------------------
-// LINKS SHARED BY ALL CARDS
+// SHARED LINKS FOR CARDS
 // -----------------------------
 const links: RssLink[] = [
   { label: "South Park’ Creators Break Silence...", href: "#" },
@@ -47,39 +88,125 @@ const links: RssLink[] = [
 // LEFT COLUMN
 // -----------------------------
 const leftCards = [
-  <RSSSmallTopImageCard imageSrc="https://placehold.co/400x300" title={randomTitle()} links={links} aspectRatio="1/1" />,
-  <RSSSmallTopTitleCard imageSrc="https://placehold.co/400x300" title={randomTitle()} links={links} aspectRatio="1/1" />,
-  <RSSSmallTopImageCard imageSrc="https://placehold.co/400x300" title={randomTitle()} links={links} aspectRatio="1/1" />,
-  <RSSSmallTopTitleCard imageSrc="https://placehold.co/400x300" title={randomTitle()} links={links} aspectRatio="1/1" />,
+  <RSSSmallTopImageCard
+    key="l1"
+    imageSrc="https://placehold.co/400x300"
+    title="Regional banks rally as investors rotate back into overlooked financial names..."
+    links={links}
+    aspectRatio="1/1"
+  />,
+  <RSSSmallTopTitleCard
+    key="l2"
+    imageSrc="https://placehold.co/400x300"
+    title="Consumers tighten budgets as cost-of-living pressures ripple through every income bracket..."
+    links={links}
+    aspectRatio="1/1"
+  />,
+  <RSSSmallTopImageCard
+    key="l3"
+    imageSrc="https://placehold.co/400x300"
+    title="Oil prices edge higher as traders watch geopolitical tensions and production cuts..."
+    links={links}
+    aspectRatio="1/1"
+  />,
+  <RSSSmallTopTitleCard
+    key="l4"
+    imageSrc="https://placehold.co/400x300"
+    title="Mortgage demand ticks up slightly despite elevated rates and affordability concerns..."
+    links={links}
+    aspectRatio="1/1"
+  />,
 ];
 
 // -----------------------------
 // MIDDLE COLUMN
 // -----------------------------
 const middleCards = [
-  <RSSBigCard imageSrc="https://placehold.co/1200x675" title={randomTitle()} links={links} aspectRatio="16/9" />,
-  <RSSMediumSplitCard imageSrc="https://placehold.co/600x400" title={randomTitle()} links={links} aspectRatio="4/3" />,
-  <RSSMediumSplitCard imageSrc="https://placehold.co/600x400" title={randomTitle()} links={links} aspectRatio="4/3" />,
+  <RSSBigCard
+    key="m1"
+    imageSrc="https://placehold.co/1200x675"
+    title="President's enforcer inspires fear and vexation across Washington as key allies quietly push back..."
+    links={links}
+    aspectRatio="16/9"
+  />,
+  <RSSMediumSplitCard
+    key="m2"
+    imageSrc="https://placehold.co/600x400"
+    title="Surprise economic data upends forecasts as analysts rethink recession odds for the coming year..."
+    links={links}
+    aspectRatio="4/3"
+  />,
+  <RSSMediumSplitCard
+    key="m3"
+    imageSrc="https://placehold.co/600x400"
+    title="Major corporate shake-up reshapes leadership ranks at one of the country's most iconic brands..."
+    links={links}
+    aspectRatio="4/3"
+  />,
 ];
 
 // -----------------------------
 // RIGHT COLUMN
 // -----------------------------
 const rightCards = [
-  <RSSSmallTopTitleCard imageSrc="https://placehold.co/400x300" title={randomTitle()} links={links} aspectRatio="1/1" />,
-  <RSSSmallTopImageCard imageSrc="https://placehold.co/400x300" title={randomTitle()} links={links} aspectRatio="1/1" />,
-  <RSSSmallTopTitleCard imageSrc="https://placehold.co/400x300" title={randomTitle()} links={links} aspectRatio="1/1" />,
-  <RSSSmallTopImageCard imageSrc="https://placehold.co/400x300" title={randomTitle()} links={links} aspectRatio="1/1" />,
+  <RSSSmallTopTitleCard
+    key="r1"
+    imageSrc="https://placehold.co/400x300"
+    title="Global airlines weigh capacity cuts as fuel costs spike and demand patterns shift again..."
+    links={links}
+    aspectRatio="1/1"
+  />,
+  <RSSSmallTopImageCard
+    key="r2"
+    imageSrc="https://placehold.co/400x300"
+    title="Streaming giants battle for subscribers as new bundles and ad tiers flood the market..."
+    links={links}
+    aspectRatio="1/1"
+  />,
+  <RSSSmallTopTitleCard
+    key="r3"
+    imageSrc="https://placehold.co/400x300"
+    title="Crypto markets lurch higher amid renewed speculation over regulatory breakthroughs..."
+    links={links}
+    aspectRatio="1/1"
+  />,
+  <RSSSmallTopImageCard
+    key="r4"
+    imageSrc="https://placehold.co/400x300"
+    title="Auto makers race to pivot as EV incentives fade and hybrid demand surges unexpectedly..."
+    links={links}
+    aspectRatio="1/1"
+  />,
 ];
 
 // -----------------------------
 // SIDEBAR CONTENT
 // -----------------------------
 const sidebarNews = [
-  { id: "s1", title: randomTitle(), imageSrc: "https://placehold.co/95x60" },
-  { id: "s2", title: randomTitle(), imageSrc: "https://placehold.co/95x60" },
-  { id: "s3", title: randomTitle(), imageSrc: "https://placehold.co/95x60" },
-  { id: "s4", title: randomTitle(), imageSrc: "https://placehold.co/95x60" },
+  {
+    id: "s1",
+    title:
+      "Investors brace for another volatile week as central bankers hint at shifting policy tone...",
+    imageSrc: "https://placehold.co/95x60",
+  },
+  {
+    id: "s2",
+    title:
+      "New report shows sharp divide between high-income and low-income household finances...",
+    imageSrc: "https://placehold.co/95x60",
+  },
+  {
+    id: "s3",
+    title:
+      "Tech layoffs ripple into secondary markets as startups rethink growth-at-all-costs strategy...",
+    imageSrc: "https://placehold.co/95x60",
+  },
+  {
+    id: "s4",
+    title:
+      "Analysts say travel demand may stay elevated despite economic clouds forming on the horizon...",
+    imageSrc: "https://placehold.co/95x60",
+  },
 ];
 
 const sidebar = (
@@ -91,14 +218,25 @@ const sidebar = (
 // -----------------------------
 export default function RssPage() {
   return (
-    <main className="page-pad-40">
-      <RssHubSection
-        stocks={mockStocks}
-        leftCards={leftCards}
-        middleCards={middleCards}
-        rightCards={rightCards}
-        sidebar={sidebar}
+    <>
+      {/* 🔥 Full-width hero carousel outside main (no 40px padding) */}
+      <FeaturedStoriesCarouselHero
+        stories={featuredStories}
+        dateLabel="November 12 2025"
       />
-    </main>
+
+      {/* RSS feeds with 40px page padding */}
+      <main className="page-pad-40">
+        <div className="mt-8">
+          <RssHubSection
+            stocks={mockStocks}
+            leftCards={leftCards}
+            middleCards={middleCards}
+            rightCards={rightCards}
+            sidebar={sidebar}
+          />
+        </div>
+      </main>
+    </>
   );
 }
