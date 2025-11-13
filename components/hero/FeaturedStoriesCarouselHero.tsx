@@ -1,3 +1,4 @@
+// components/hero/FeaturedStoriesCarouselHero.tsx
 "use client";
 
 import React, { useEffect, useState } from "react";
