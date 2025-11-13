@@ -1,6 +1,7 @@
 // components/rss/RssSideBar.tsx
 import React from "react";
-
+import { RssNewsletterBox } from "@/components/rss/RssNewsletterBox";
+  
 type SidebarNewsItem = {
   id: string;
   title: string;
@@ -44,12 +45,15 @@ export function RssSidebar({
           alt="Advertisement"
           className="w-full rounded-md"
         />
-        <div className="flex justify-between text-[8px] text-zinc-500">
+        <div className="flex justify-between text-[8px] text-zinc-500 mb-2">
           <span>Advertisement</span>
           <a href={adHref} className="underline">
             Ad feedback
           </a>
         </div>
+
+        {/* Newsletter Box */}
+        <RssNewsletterBox />
       </div>
     </div>
   );
