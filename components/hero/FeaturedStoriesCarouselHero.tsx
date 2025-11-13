@@ -48,10 +48,11 @@ export function FeaturedStoriesCarouselHero({
   // Split stories into groups based on chunkSize
   const grouped = chunk(displayed, chunkSize);
 
-  // ---- dot indicators state ----
+  // ---- carousel API + dot indicators ----
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [current, setCurrent] = useState(0);
 
+  // Keep current dot in sync with carousel
   useEffect(() => {
     if (!api) return;
 
@@ -59,7 +60,20 @@ export function FeaturedStoriesCarouselHero({
     onSelect();
     api.on("select", onSelect);
 
-    return () => api.off("select", onSelect);
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
+  // 🎞️ Autoplay: infinite moving cards
+  useEffect(() => {
+    if (!api) return;
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, 5000); // 5 seconds per slide
+
+    return () => clearInterval(interval);
   }, [api]);
 
   const handleDotClick = (index: number) => {
@@ -68,7 +82,6 @@ export function FeaturedStoriesCarouselHero({
 
   return (
     <div className="relative w-full px-6 md:px-10 py-8 overflow-hidden">
-
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-90"
@@ -83,12 +96,15 @@ export function FeaturedStoriesCarouselHero({
 
       {/* MAIN CONTENT */}
       <div className="relative z-10 flex flex-col gap-6">
-
         <h2 className="text-white text-3xl md:text-5xl font-bold font-[Poppins]">
           Today’s Kind Joe Featured Stories
         </h2>
 
-        <Carousel className="w-full" setApi={setApi}>
+        <Carousel
+          className="w-full"
+          setApi={setApi}
+          opts={{ loop: true }} // 🔁 infinite loop
+        >
           <CarouselContent className="-ml-2 md:-ml-4">
             {grouped.map((group, idx) => (
               <CarouselItem key={idx} className="pl-2 md:pl-4 basis-full">
@@ -136,7 +152,7 @@ export function FeaturedStoriesCarouselHero({
           </CarouselContent>
         </Carousel>
 
-        {/* Dot indicators */}
+        {/* Dot indicators – now move with autoplay */}
         <div className="flex justify-center gap-2 mt-2">
           {grouped.map((_, idx) => (
             <button

@@ -2,6 +2,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+@theme inline {
+  --animate-scroll: scroll var(--animation-duration, 40s)
+    var(--animation-direction, forwards) linear infinite;
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -148,5 +159,35 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* === Infinite horizontal ticker for stocks === */
+@keyframes kj-ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-animate {
+  display: inline-flex;
+  width: max-content;
+  animation: kj-ticker 30s linear infinite;
+  will-change: transform;
+}
+
+/* Pause on hover so the user can read */
+.ticker-animate:hover {
+  animation-play-state: paused;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-animate {
+    animation: none;
+    transform: translateX(0);
   }
 }

@@ -19,15 +19,16 @@ function dotClass(n: number) {
 }
 
 export function RssStocksTicker({ stocks }: { stocks: StockItem[] }) {
+  // duplicate items so the ticker can loop seamlessly
+  const looped = [...stocks, ...stocks];
+
   return (
-    <div className="w-full overflow-x-auto">
-      {/* On small screens: single row, scroll horizontally.
-          On >= sm: items can wrap nicely and fill space. */}
-      <div className="flex flex-nowrap sm:flex-wrap sm:justify-between gap-x-6 gap-y-3 min-w-max sm:min-w-0">
-        {stocks.map((s) => (
+    <div className="w-full overflow-hidden">
+      <div className="ticker-animate">
+        {looped.map((s, index) => (
           <div
-            key={s.label}
-            className="flex items-center gap-2 shrink-0"
+            key={`${s.label}-${index}`}
+            className="flex items-center gap-2 shrink-0 mr-6"
           >
             <div className="text-black text-sm md:text-base font-bold font-[Poppins]">
               {s.label}
