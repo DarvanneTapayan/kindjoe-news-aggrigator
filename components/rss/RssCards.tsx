@@ -1,177 +1,18 @@
 // components/rss/RssCards.tsx
-"use client";
-
+import React from "react";
 import type { RssLink } from "@/lib/rss/types";
 
 const Divider = () => <div className="h-px w-full border-t border-neutral-300" />;
 
-/* ------------------------------------------------------------------ */
-/*  RSS BIG CARD
-    Layout: 
-    [ big image ]
-    [ headline ]
-    [ line ]
-    [ 5 rss links ]
-    [ line ]
-/* ------------------------------------------------------------------ */
-
-export function RSSBigCard(props: {
-  imageSrc: string;
-  imageAlt?: string;
-  title: string;
-  links: RssLink[];
-  aspectRatio?: string;   // ⭐ ratio again
-}) {
-  const { imageSrc, imageAlt = "", title, links, aspectRatio = "16/9" } = props;
-
-  return (
-    <article className="flex flex-col gap-3 font-[Poppins]">
-      <div className="overflow-hidden rounded-md">
-        <img
-          src={imageSrc}
-          alt={imageAlt}
-          className="w-full h-full object-cover"
-          style={{ aspectRatio }}
-        />
-      </div>
-
-      <h3 className="text-[26px] md:text-[28px] font-extrabold leading-snug line-clamp-3">
-        {title}
-      </h3>
-
-      <Divider />
-      <RssLinksList links={links} />
-    </article>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  RSS MEDIUM SPLIT CARD
-    Layout:
-    [ image | headline ]
-    [ line ]
-    [ 5 rss links ]
-    [ line ]
-/* ------------------------------------------------------------------ */
-export function RSSMediumSplitCard(props: {
-  imageSrc: string;
-  imageAlt?: string;
-  title: string;
-  links: RssLink[];
-  aspectRatio?: string;
-}) {
-  const { imageSrc, imageAlt = "", title, links, aspectRatio = "4/3" } = props;
-
-  return (
-    <article className="flex flex-col gap-2 font-[Poppins]">
-
-      <div className="grid grid-cols-12 gap-3 items-start">
-        {/* Image becomes larger: col-span-6 */}
-        <div className="col-span-6 overflow-hidden rounded-md">
-          <img
-            src={imageSrc}
-            alt={imageAlt}
-            className="w-full h-full object-cover"
-            style={{ aspectRatio }}
-          />
-        </div>
-
-        {/* Title becomes slightly narrower */}
-        <h3 className="col-span-6 text-xl md:text-2xl font-bold leading-tight line-clamp-3">
-          {title}
-        </h3>
-      </div>
-
-      <Divider />
-      <RssLinksList links={links} />
-    </article>
-  );
-}
-
-/* ---------- SMALL CARD: TOP IMAGE, BOTTOM HEADLINE (square image) ---------- */
-export function RSSSmallTopImageCard(props: {
-  imageSrc: string;
-  imageAlt?: string;
-  title: string;
-  links: RssLink[];
-  aspectRatio?: string; // ⭐ now default square
-}) {
-  const { imageSrc, imageAlt = "", title, links, aspectRatio = "1/1" } = props;
-
-  return (
-    <article className="flex flex-col gap-2 font-[Poppins]">
-
-      <div className="overflow-hidden rounded-md">
-        <img
-          src={imageSrc}
-          alt={imageAlt}
-          className="w-full h-full object-cover"
-          style={{ aspectRatio }}
-        />
-      </div>
-
-      <h3 className="mt-2 text-lg md:text-xl font-bold leading-snug line-clamp-3 text-slate-900">
-        {title}
-      </h3>
-
-      <Divider />
-      <RssLinksList links={links} />
-    </article>
-  );
-}
-
-/* ---------- SMALL CARD: TOP HEADLINE, BOTTOM IMAGE (square image) ---------- */
-
-export function RSSSmallTopTitleCard(props: {
-  imageSrc: string;
-  imageAlt?: string;
-  title: string;
-  links: RssLink[];
-  aspectRatio?: string;
-}) {
-  const { imageSrc, imageAlt = "", title, links, aspectRatio = "1/1" } = props;
-
-  return (
-    <article className="flex flex-col gap-2 font-[Poppins]">
-
-      <h3 className="text-lg md:text-xl font-bold leading-snug line-clamp-3 text-slate-900">
-        {title}
-      </h3>
-
-      <div className="overflow-hidden rounded-md">
-        <img
-          src={imageSrc}
-          alt={imageAlt}
-          className="w-full h-full object-cover"
-          style={{ aspectRatio }}
-        />
-      </div>
-
-      <Divider />
-      <RssLinksList links={links} />
-    </article>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/*  SHARED LINKS LIST (5 RSS bullets)
-/* ------------------------------------------------------------------ */
-
-function RssLinksList({ links }: { links: RssLink[] }) {
-  if (!links.length) return null;
-
+// Shared list for RSS links under each card
+export function RssLinksList({ links }: { links: RssLink[] }) {
   return (
     <ul className="flex flex-col gap-2">
       {links.map((link, index) => (
-        <li
-          key={`${index}-${link.href || "nohref"}`}
-          className="text-sm md:text-base leading-snug"
-        >
+        <li key={index} className="text-sm md:text-base leading-snug">
           <a
             href={link.href}
             className="text-slate-900 hover:text-blue-700 hover:underline underline-offset-2"
-            target="_blank"
-            rel="noopener noreferrer"
           >
             {link.label}
           </a>
@@ -181,3 +22,164 @@ function RssLinksList({ links }: { links: RssLink[] }) {
   );
 }
 
+// ============================
+// BIG CARD
+// Image top, big headline, then links
+// ============================
+export function RSSBigCard(props: {
+  imageSrc: string;
+  imageAlt?: string;
+  title: string;
+  links: RssLink[];
+  aspectRatio?: string; // e.g. "16/9"
+  href?: string; // optional click target for the main headline
+}) {
+  const { imageSrc, imageAlt = "", title, links, aspectRatio = "16/9", href = "#" } = props;
+
+  return (
+    <article className="flex flex-col gap-3 font-[Poppins]">
+      <div className="w-full overflow-hidden rounded-md">
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className="w-full h-auto object-cover"
+          style={{ aspectRatio }}
+        />
+      </div>
+
+      {/* Clickable headline, full text (no truncation) */}
+      <a
+        href={href}
+        className="text-2xl md:text-[28px] font-bold text-slate-900 leading-snug hover:text-blue-700 hover:underline"
+      >
+        {title}
+      </a>
+
+      <Divider />
+
+      <RssLinksList links={links} />
+    </article>
+  );
+}
+
+// ============================
+// MEDIUM SPLIT CARD
+// Image left, headline right, then links
+// ============================
+export function RSSMediumSplitCard(props: {
+  imageSrc: string;
+  imageAlt?: string;
+  title: string;
+  links: RssLink[];
+  aspectRatio?: string; // e.g. "4/3"
+  href?: string;
+}) {
+  const { imageSrc, imageAlt = "", title, links, aspectRatio = "4/3", href = "#" } = props;
+
+  return (
+    <article className="flex flex-col gap-2 font-[Poppins]">
+      <div className="grid grid-cols-12 gap-3 items-start">
+        <div className="col-span-5 overflow-hidden rounded-md">
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            className="w-full h-auto object-cover"
+            style={{ aspectRatio }}
+          />
+        </div>
+
+        {/* Clickable headline, full wrap */}
+        <a
+          href={href}
+          className="col-span-7 text-lg md:text-xl font-bold text-slate-900 leading-snug hover:text-blue-700 hover:underline"
+        >
+          {title}
+        </a>
+      </div>
+
+      <Divider />
+
+      <RssLinksList links={links} />
+    </article>
+  );
+}
+
+// ============================
+// SMALL CARD: TOP IMAGE
+// Image top, small headline below, then links
+// ============================
+export function RSSSmallTopImageCard(props: {
+  imageSrc: string;
+  imageAlt?: string;
+  title: string;
+  links: RssLink[];
+  aspectRatio?: string; // e.g. "1/1"
+  href?: string;
+}) {
+  const { imageSrc, imageAlt = "", title, links, aspectRatio = "1/1", href = "#" } = props;
+
+  return (
+    <article className="flex flex-col gap-2 font-[Poppins]">
+      <div className="w-full overflow-hidden rounded-md">
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className="w-full h-auto object-cover"
+          style={{ aspectRatio }}
+        />
+      </div>
+
+      {/* Clickable headline, slightly smaller */}
+      <a
+        href={href}
+        className="text-base md:text-lg font-semibold text-slate-900 leading-snug hover:text-blue-700 hover:underline"
+      >
+        {title}
+      </a>
+
+      <Divider />
+
+      <RssLinksList links={links} />
+    </article>
+  );
+}
+
+// ============================
+// SMALL CARD: TOP TITLE
+// Headline on top, image below, then links
+// ============================
+export function RSSSmallTopTitleCard(props: {
+  imageSrc: string;
+  imageAlt?: string;
+  title: string;
+  links: RssLink[];
+  aspectRatio?: string; // e.g. "1/1"
+  href?: string;
+}) {
+  const { imageSrc, imageAlt = "", title, links, aspectRatio = "1/1", href = "#" } = props;
+
+  return (
+    <article className="flex flex-col gap-2 font-[Poppins]">
+      {/* Clickable headline on top */}
+      <a
+        href={href}
+        className="text-base md:text-lg font-semibold text-slate-900 leading-snug hover:text-blue-700 hover:underline"
+      >
+        {title}
+      </a>
+
+      <div className="w-full overflow-hidden rounded-md">
+        <img
+          src={imageSrc}
+          alt={imageAlt}
+          className="w-full h-auto object-cover"
+          style={{ aspectRatio }}
+        />
+      </div>
+
+      <Divider />
+
+      <RssLinksList links={links} />
+    </article>
+  );
+}

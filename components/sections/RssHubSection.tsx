@@ -46,10 +46,12 @@ export default function RssHubSection({
 
       {/* Main content: feeds + divider + sidebar */}
       <div className="mt-6 flex flex-col gap-5 md:flex-row">
-        {/* RSS FEEDS (3 columns on md+, stacked on mobile) */}
-        <div className="md:flex-1 grid gap-5 grid-cols-1 md:grid-cols-[3fr_7fr_3fr]">
-          {/* LEFT column */}
-          <div className="flex flex-col gap-3">
+        {/* RSS FEEDS */}
+        {/* On mobile: flex-col, reordered by `order-*`
+            On md+: grid with 3 columns [3fr,7fr,3fr] in normal left–middle–right order */}
+        <div className="md:flex-1 flex flex-col gap-5 md:grid md:grid-cols-[3fr_7fr_3fr]">
+          {/* LEFT column (mobile: 3rd, desktop: 1st) */}
+          <div className="flex flex-col gap-3 order-3 md:order-0">
             {leftCards.map((card, index) => (
               <React.Fragment key={index}>
                 {card}
@@ -58,8 +60,8 @@ export default function RssHubSection({
             ))}
           </div>
 
-          {/* MIDDLE column */}
-          <div className="flex flex-col gap-5">
+          {/* MIDDLE column (mobile: 1st, desktop: 2nd) */}
+          <div className="flex flex-col gap-5 order-1 md:order-0">
             {middleCards.map((card, index) => (
               <React.Fragment key={index}>
                 {card}
@@ -68,8 +70,8 @@ export default function RssHubSection({
             ))}
           </div>
 
-          {/* RIGHT column */}
-          <div className="flex flex-col gap-3">
+          {/* RIGHT column (mobile: 2nd, desktop: 3rd) */}
+          <div className="flex flex-col gap-3 order-2 md:order-0">
             {rightCards.map((card, index) => (
               <React.Fragment key={index}>
                 {card}
@@ -84,7 +86,7 @@ export default function RssHubSection({
           <div className="bg-neutral-300 w-full h-px md:w-px md:h-auto md:self-stretch" />
         )}
 
-        {/* SIDEBAR (auto width, stacks below on mobile) */}
+        {/* SIDEBAR (stays last on mobile, right on desktop) */}
         {sidebar && (
           <aside className="flex justify-start md:justify-end w-full md:w-auto">
             {sidebar}

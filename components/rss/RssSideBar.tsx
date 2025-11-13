@@ -17,7 +17,7 @@ export function RssSidebar({
   adHref?: string;
 }) {
   return (
-    <div className="w-full max-w-[240px] flex flex-col gap-6 font-[Poppins]">
+    <div className="w-full max-w-60 flex flex-col gap-6 font-[Poppins]">
       <h3 className="text-slate-950 text-sm font-bold">More News</h3>
 
       <div className="flex flex-col gap-4">
